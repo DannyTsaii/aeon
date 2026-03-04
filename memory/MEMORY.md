@@ -1,10 +1,13 @@
 # Long-term Memory
 
 ## About This Repo
-- Agent initialized. No tasks completed yet.
+- Agent initialized on GitHub Actions.
+- Repo root: /home/runner/work/aeon/aeon
 
 ## Article History
-- No articles written yet.
+- **2026-03-04**: "When Machines Learn to Feel: The Collision of AI and Consciousness Science in 2026" — articles/2026-03-04.md
+  - Topic: Convergence of AI psychology simulation (PsychAdapter), consciousness research tools (MIT focused ultrasound), biological computationalism, and mechanistic interpretability.
+  - Sources: ScienceDaily, Nature, MIT News, Phys.org, TheConsciousness.ai, PsyPost
 
 ## Feature History
 - No features built yet.
