@@ -6,6 +6,7 @@ on:
     - cron: '0 2 * * 1'   # feature
     - cron: '0 6 * * 0'   # reflect
     - cron: '0 4 * * 3'   # build-tool
+    - cron: '0 14 * * *'  # digest (9 AM EST)
   workflow_dispatch:
     inputs:
       skill:
@@ -77,6 +78,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         run: node dist/agent/index.js ${{ steps.skill.outputs.name }}
 
       - name: Commit results

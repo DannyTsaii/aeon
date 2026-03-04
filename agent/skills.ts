@@ -7,6 +7,7 @@ export interface SkillConfig {
   schedule: string;
   commits: string[];
   permissions: string[];
+  vars: Record<string, string>;
 }
 
 export interface Skill {
@@ -72,13 +73,14 @@ function parseFrontmatter(raw: string): { meta: Record<string, string | string[]
 
 // ─── Template interpolation ────────────────────────────────────────────────────
 
-function interpolate(template: string): string {
+function interpolate(template: string, extraVars: Record<string, string> = {}): string {
   const now = new Date();
   const today = now.toISOString().split("T")[0];
   const vars: Record<string, string> = {
     today,
     now: now.toISOString(),
     repo: process.env.GITHUB_REPOSITORY || "aeon",
+    ...extraVars,
   };
 
   return template.replace(/\$\{(\w+)\}/g, (_, key) => vars[key] ?? `\${${key}}`);
@@ -96,15 +98,23 @@ export function loadSkill(name: string): Skill {
   const raw = readFileSync(filePath, "utf-8");
   const { meta, body } = parseFrontmatter(raw);
 
+  // Parse vars: "key=value" entries from frontmatter
+  const vars: Record<string, string> = {};
+  for (const entry of toStringArray(meta.vars)) {
+    const eq = entry.indexOf("=");
+    if (eq > 0) vars[entry.slice(0, eq).trim()] = entry.slice(eq + 1).trim();
+  }
+
   const config: SkillConfig = {
     name: (meta.name as string) || name,
     description: (meta.description as string) || "",
     schedule: (meta.schedule as string) || "",
     commits: toStringArray(meta.commits),
     permissions: toStringArray(meta.permissions),
+    vars,
   };
 
-  return { config, prompt: interpolate(body) };
+  return { config, prompt: interpolate(body, vars) };
 }
 
 export function listSkills(): string[] {

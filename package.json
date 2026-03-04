@@ -9,10 +9,12 @@
     "skill": "ts-node agent/index.ts",
     "article": "ts-node agent/index.ts article",
     "feature": "ts-node agent/index.ts feature",
-    "build-tool": "ts-node agent/index.ts build-tool"
+    "build-tool": "ts-node agent/index.ts build-tool",
+    "digest": "ts-node agent/index.ts digest"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
+    "@vercel/node": "^5.6.10",
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
   },
