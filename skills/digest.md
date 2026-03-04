@@ -1,6 +1,6 @@
 ---
 name: Daily Digest
-description: Generate and broadcast a daily digest on a configurable topic to Telegram subscribers
+description: Generate and send a daily digest on a configurable topic via Telegram
 schedule: "0 14 * * *"
 commits:
   - memory/
@@ -8,11 +8,10 @@ permissions:
   - contents:write
 vars:
   - topic=neuroscience
-  - subscribers_file=memory/subscribers.json
   - search_terms=brain research, cognitive science, neuroimaging, mental health, BCIs, memory and learning
 ---
 
-Today is ${today}. Generate and send a daily **${topic}** digest to all subscribers.
+Today is ${today}. Generate and send a daily **${topic}** digest.
 
 ## Steps
 
@@ -44,41 +43,15 @@ Today is ${today}. Generate and send a daily **${topic}** digest to all subscrib
    ```
    If XAI_API_KEY is not set, skip this step and rely on web_search only.
 
-3. **Combine and format.** Merge findings into a single digest formatted as
-   HTML for Telegram:
-   - Bold title: `<b>${topic} Daily - ${today}</b>`
-   - Each item: `<b>[Topic]</b>\n[2-3 sentence summary]\nSource: @handle or URL`
-   - Escape HTML entities: `&amp;` `&lt;` `&gt;`
-   - Keep total message under 4000 chars (Telegram limit)
+3. **Combine and format.** Merge findings into a concise digest. Keep it under
+   4000 chars. Use Markdown formatting.
 
-4. **Load subscribers** from `${subscribers_file}` using `run_code`:
-   ```js
-   const fs = require("fs")
-   try {
-     return fs.readFileSync("${subscribers_file}", "utf-8")
-   } catch { return "[]" }
-   ```
-   The file is a JSON array of chat IDs, e.g. `[123456, 789012]`.
+4. **Send the digest via `send_telegram`.** Send the full digest message.
 
-5. **Broadcast to all subscribers** using `run_code`. Send each message with a
-   50ms delay to respect Telegram rate limits:
-   ```js
-   const token = process.env.TELEGRAM_BOT_TOKEN
-   for (const chatId of subscribers) {
-     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: "HTML" })
-     })
-     await new Promise(r => setTimeout(r, 50))
-   }
-   ```
-
-6. **Log results.** Update memory with what was sent and subscriber count.
-
-7. **Notify via send_telegram** with a summary: subscriber count, topics covered.
+5. **Log results.** Update memory with what was sent.
 
 ## Environment Variables Required
 
 - `XAI_API_KEY` — X.AI API key for Grok x_search (optional, falls back to web_search)
 - `TELEGRAM_BOT_TOKEN` — Telegram bot token
+- `TELEGRAM_CHAT_ID` — Chat to send the digest to
