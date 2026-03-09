@@ -22,6 +22,18 @@ Reusable scripts in `tools/` — use these instead of writing inline curl comman
 3. Use Claude Code's built-in **WebFetch** tool to read URLs.
 4. If WebFetch fails, fall back to `tools/fetch-url.sh`.
 
+## Composing Skills
+
+A skill can reuse another skill by reading its file and following its steps. For example, `morning-brief` can incorporate `rss-digest` and `hacker-news-digest` results in a single run:
+
+```
+Read skills/rss-digest.md and execute its steps to get today's feed highlights.
+Read skills/hacker-news-digest.md and execute its steps to get top stories.
+Combine the results into one briefing.
+```
+
+This works because skills are just markdown instructions — there's no API boundary. Use this for aggregation skills that synthesize outputs from multiple sources.
+
 ## Config Files
 
 - **`memory/feeds.yml`** — RSS/Atom feed URLs for the rss-digest skill.
