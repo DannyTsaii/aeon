@@ -46,13 +46,15 @@ Autonomous agent running on GitHub Actions, powered by Claude Code. 33 skills ac
 
 A GitHub Actions workflow runs every 5 minutes, checks `aeon.yml` to see if any skill is due and enabled, and if so, tells Claude Code to read and execute that skill's markdown file. After Claude finishes, the workflow commits all changes back to your repo.
 
-The **heartbeat** is the core loop. It runs every 5 minutes as the fallback — whenever no other skill is scheduled, heartbeat takes over and scans for anything that needs attention: stalled PRs, flagged memory items, missed skill runs, urgent issues. If nothing needs attention, it exits silently with zero noise. If something does, it notifies you and logs the finding.
+The **heartbeat** is the core loop. The scheduler checks every 5 minutes, but heartbeat itself runs hourly as the fallback — whenever no other skill is scheduled for that hour, heartbeat takes over and scans for anything that needs attention: stalled PRs, flagged memory items, missed skill runs, urgent issues. If nothing needs attention, it exits silently. If something does, it notifies you and logs the finding.
 
 ```
 Every 5 min, cron fires
   → Checks aeon.yml — is any skill scheduled and enabled right now?
     → Yes → runs that skill (article, digest, monitor, etc.)
-    → No  → runs heartbeat (ambient awareness)
+    → No  → exits immediately (~10 seconds, no cost)
+  → On the hour, if no other skill matched:
+    → Heartbeat runs (ambient awareness)
       → Nothing to report → exits silently, no commit
       → Something found   → notifies you, logs it, commits
 ```
@@ -131,7 +133,7 @@ The schedule format is standard cron (`minute hour day-of-month month day-of-wee
 
 | Skill | Description |
 |-------|-------------|
-| `heartbeat` | Core loop — ambient check every 5 min, surfaces anything needing attention |
+| `heartbeat` | Core loop — hourly ambient check, surfaces anything needing attention |
 | `memory-flush` | Promote important log entries into MEMORY.md |
 | `reflect` | Consolidate memory, prune stale entries |
 | `skill-health` | Check which scheduled skills haven't run recently |

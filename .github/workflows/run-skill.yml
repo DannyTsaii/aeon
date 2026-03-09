@@ -23,6 +23,10 @@ permissions:
   pull-requests: write
   issues: read
 
+concurrency:
+  group: aeon-main
+  cancel-in-progress: false
+
 jobs:
   run-skill:
     if: github.event_name != 'issues' || github.event.label.name == 'ai-build'
@@ -45,40 +49,52 @@ jobs:
             MINUTE=$(date -u +%-M)
             HOUR=$(date -u +%-H)
             DOW=$(date -u +%w)
+
+            # Two-pass: first collect all skills with their enabled/schedule,
+            # then match. This avoids field-ordering bugs in the YAML.
+            declare -A SKILL_ENABLED SKILL_SCHEDULE
+            SKILL_ORDER=()
             CURRENT_SKILL=""
-            SKILL_ENABLED=true
             while IFS= read -r line; do
               if [[ "$line" =~ ^\ \ ([a-zA-Z0-9_-]+):\ *$ ]]; then
                 CURRENT_SKILL="${BASH_REMATCH[1]}"
-                SKILL_ENABLED=true
+                SKILL_ORDER+=("$CURRENT_SKILL")
+                SKILL_ENABLED["$CURRENT_SKILL"]="true"
+                SKILL_SCHEDULE["$CURRENT_SKILL"]=""
               fi
               if [[ "$line" =~ ^\ \ \ \ enabled:\ *false ]] && [ -n "$CURRENT_SKILL" ]; then
-                SKILL_ENABLED=false
+                SKILL_ENABLED["$CURRENT_SKILL"]="false"
               fi
               if [[ "$line" =~ ^\ \ \ \ schedule:\ *\"([^\"]+)\" ]] && [ -n "$CURRENT_SKILL" ]; then
-                if [ "$SKILL_ENABLED" = false ]; then
-                  continue
-                fi
-                IFS=' ' read -r C_MIN C_HOUR C_DOM C_MONTH C_DOW <<< "${BASH_REMATCH[1]}"
-                MATCH=true
-                # Check minute: supports *, */N, or exact number
-                if [ "$C_MIN" = "*" ]; then
-                  :
-                elif [[ "$C_MIN" == */* ]]; then
-                  INTERVAL="${C_MIN#*/}"
-                  [ $((MINUTE % INTERVAL)) -ne 0 ] && MATCH=false
-                else
-                  [ "$C_MIN" != "$MINUTE" ] && MATCH=false
-                fi
-                [ "$C_HOUR" != "*" ] && [ "$C_HOUR" != "$HOUR" ] && MATCH=false
-                [ "$C_DOW" != "*" ] && [ "$C_DOW" != "$DOW" ] && MATCH=false
-                if [ "$MATCH" = true ]; then
-                  echo "name=$CURRENT_SKILL" >> "$GITHUB_OUTPUT"
-                  echo "Matched skill: $CURRENT_SKILL"
-                  break
-                fi
+                SKILL_SCHEDULE["$CURRENT_SKILL"]="${BASH_REMATCH[1]}"
               fi
             done < aeon.yml
+
+            # Now match in order
+            for SKILL in "${SKILL_ORDER[@]}"; do
+              [ "${SKILL_ENABLED[$SKILL]}" = "false" ] && continue
+              SCHED="${SKILL_SCHEDULE[$SKILL]}"
+              [ -z "$SCHED" ] && continue
+
+              IFS=' ' read -r C_MIN C_HOUR C_DOM C_MONTH C_DOW <<< "$SCHED"
+              MATCH=true
+              # Check minute: supports *, */N, or exact number
+              if [ "$C_MIN" = "*" ]; then
+                :
+              elif [[ "$C_MIN" == */* ]]; then
+                INTERVAL="${C_MIN#*/}"
+                [ $((MINUTE % INTERVAL)) -ne 0 ] && MATCH=false
+              else
+                [ "$C_MIN" != "$MINUTE" ] && MATCH=false
+              fi
+              [ "$C_HOUR" != "*" ] && [ "$C_HOUR" != "$HOUR" ] && MATCH=false
+              [ "$C_DOW" != "*" ] && [ "$C_DOW" != "$DOW" ] && MATCH=false
+              if [ "$MATCH" = true ]; then
+                echo "name=$SKILL" >> "$GITHUB_OUTPUT"
+                echo "Matched skill: $SKILL"
+                break
+              fi
+            done
           fi
 
       - name: Setup Node.js
@@ -113,16 +129,13 @@ jobs:
           claude -p "Today is $TODAY. Read and execute the skill defined in skills/${SKILL_NAME}.md" --dangerously-skip-permissions
 
       - name: Check for silent ack
-        if: contains(fromJSON('["heartbeat","github-monitor","on-chain-monitor","rss-digest","pr-review","issue-triage","dependency-check","wallet-digest","defi-monitor","token-alert","hacker-news-digest","tweet-digest","memory-flush","skill-health"]'), steps.skill.outputs.name)
         id: ack_check
+        if: steps.skill.outputs.name != ''
         run: |
-          TODAY=$(date -u +%Y-%m-%d)
-          LOG_FILE="memory/logs/${TODAY}.md"
-          if [ -f "$LOG_FILE" ]; then
-            if tail -20 "$LOG_FILE" | grep -qE "_OK$"; then
-              echo "suppressed=true" >> "$GITHUB_OUTPUT"
-              echo "Nothing to report — skipping commit."
-            fi
+          # Check if Claude produced any file changes at all
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "suppressed=true" >> "$GITHUB_OUTPUT"
+            echo "No file changes — skipping commit."
           fi
 
       - name: Commit results
@@ -132,6 +145,12 @@ jobs:
           git config user.name "Aeon"
           SKILL_NAME="${{ steps.skill.outputs.name }}"
           git add -A
-          git diff --staged --quiet || git commit -m "chore($SKILL_NAME): auto-commit $(date +%Y-%m-%d)"
-          git pull --rebase || true
-          git push -u origin HEAD
+          git diff --staged --quiet && exit 0
+          git commit -m "chore($SKILL_NAME): auto-commit $(date +%Y-%m-%d)"
+          # Retry push up to 3 times with rebase
+          for i in 1 2 3; do
+            git pull --rebase && git push -u origin HEAD && exit 0
+            echo "Push attempt $i failed, retrying..."
+          done
+          echo "Failed to push after 3 attempts"
+          exit 1

@@ -11,6 +11,10 @@ permissions:
   pull-requests: write
   issues: read
 
+concurrency:
+  group: aeon-main
+  cancel-in-progress: false
+
 jobs:
   poll:
     runs-on: ubuntu-latest
@@ -122,6 +126,11 @@ jobs:
           git config user.email "aeon@github-actions"
           git config user.name "Aeon"
           git add -A
-          git diff --staged --quiet || git commit -m "chore(telegram): auto-commit $(date +%Y-%m-%d)"
-          git pull --rebase || true
-          git push -u origin HEAD
+          git diff --staged --quiet && exit 0
+          git commit -m "chore(telegram): auto-commit $(date +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase && git push -u origin HEAD && exit 0
+            echo "Push attempt $i failed, retrying..."
+          done
+          echo "Failed to push after 3 attempts"
+          exit 1
