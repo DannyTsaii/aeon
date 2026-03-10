@@ -35,7 +35,6 @@ on:
           - search-papers
           - self-review
           - skill-health
-          - substack-draft
           - token-alert
           - tweet-digest
           - wallet-digest

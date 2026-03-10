@@ -49,9 +49,6 @@ skills:
   article:
     enabled: true
     schedule: "0 14 * * *"
-  substack-draft:
-    enabled: true
-    schedule: "0 14 * * *"
   digest:
     enabled: true
     schedule: "0 14 * * *"
