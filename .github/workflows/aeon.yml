@@ -316,7 +316,7 @@ jobs:
           fi
           ALLOWED="Read,Write,Edit,Glob,Grep,WebFetch,WebSearch"
           ALLOWED="$ALLOWED,Bash(curl:*),Bash(gh:*),Bash(git:*),Bash(jq:*)"
-          ALLOWED="$ALLOWED,Bash(bash notify.sh:*),Bash(./notify.sh:*)"
+          ALLOWED="$ALLOWED,Bash(bash notify.sh:*),Bash(./notify.sh:*),Bash(bash ./notify.sh:*),Bash(sh notify.sh:*),Bash(sh ./notify.sh:*)"
           ALLOWED="$ALLOWED,Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(chmod:*)"
           ALLOWED="$ALLOWED,Bash(date:*),Bash(echo:*),Bash(node:*),Bash(npm:*),Bash(npx:*)"
           ALLOWED="$ALLOWED,Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(sort:*),Bash(grep:*)"
