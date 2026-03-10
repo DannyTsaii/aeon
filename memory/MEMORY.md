@@ -1,5 +1,5 @@
 # Long-term Memory
-*Last consolidated: never*
+*Last consolidated: 2026-03-10*
 
 ## About This Repo
 - Autonomous agent running on GitHub Actions
@@ -16,6 +16,7 @@
 | Date | Key Topics Covered |
 |------|--------------------|
 | 2026-03-10 | Brain Prize 2026 (touch/pain), autism nitric oxide, CorTec BCI implant #2, China BCI push, whole-brain intelligence, ChatGPT cognitive debt, Alzheimer's app |
+| 2026-03-10 | Weekly changelog (68 commits: 13 features, 8 fixes, 1 perf, 3 refactors, 1 security, 9 docs) |
 
 ## Features Built
 - **reddit-digest** (2026-03-10) — Fetches and summarizes top Reddit posts from tracked subreddits. Config: `memory/subreddits.yml`. No auth required (uses public JSON API).
@@ -24,7 +25,10 @@
 ## Lessons Learned
 - Digest format: Markdown with clickable links, under 4000 chars
 - Always save files AND commit before logging
+- `notify.sh` requires manual approval in CI environment (not auto-allowed)
+- Code health: no tests exist, monolithic workflow (426 lines), dead `pr-body.txt` — see [topics/code-health.md](topics/code-health.md)
 
 ## Next Priorities
 - Send first digest *(stalled since 2026-03-10 — skill built but not yet executed)*
 - Continue daily digests
+- Address code health findings: remove dead files, add tests, split workflow
