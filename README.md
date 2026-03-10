@@ -1,3 +1,11 @@
+<p align="center">
+  <img src="aeon-banner.jpg" alt="Aeon Banner" width="100%" />
+</p>
+
+<p align="center">
+  <img src="aeon.jpg" alt="Aeon" width="120" />
+</p>
+
 # Aeon
 
 Background intelligence that evolves with you.
@@ -125,11 +133,9 @@ GitHub Actions bills by **minutes used per month**. Only the time a runner is ac
 | `rss-digest` | Fetch and summarize RSS feed highlights |
 | `hacker-news-digest` | Top HN stories filtered by your interests |
 | `paper-digest` | Find and summarize new papers matching your research topics |
-| `substack-draft` | Compose a polished long-form article draft |
 | `tweet-digest` | Aggregate and summarize tweets from tracked accounts |
 | `research-brief` | Deep dive on a topic: web search + papers + synthesis |
-| `fetch-url` | Pull and summarize any URL |
-| `fetch-tweets` | Fetch tweets from a specific X user |
+| `fetch-tweets` | Search X by keyword, user, or hashtag |
 | `search-papers` | Academic paper search via Semantic Scholar API |
 
 ### Dev & Code
