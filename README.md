@@ -470,6 +470,39 @@ The soul files work when they're **specific enough to be wrong**. "I think most 
 claude -p "Today is $(date +%Y-%m-%d). Read and execute the skill defined in skills/article/SKILL.md" --dangerously-skip-permissions
 ```
 
+## Dashboard
+
+A local web UI for managing Aeon without touching code or YAML. Toggle skills, set schedules, configure GitHub Actions secrets, import skills from other repos, and push changes to GitHub — all from your browser.
+
+### Setup
+
+```bash
+cd dashboard
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). No environment variables needed — the dashboard reads and writes files directly from the repo on disk.
+
+### What it does
+
+| Feature | How it works |
+|---------|-------------|
+| **Toggle skills** | Flips `enabled: true/false` in `aeon.yml` |
+| **Set schedules** | Pick a time (hour, AM/PM, day) or interval — writes the cron expression for you |
+| **Run skills** | Triggers `gh workflow run aeon.yml -f skill=<name>` |
+| **View runs** | Lists recent workflow runs via `gh run list` |
+| **Manage secrets** | Sets/removes GitHub Actions secrets via `gh secret set` / `gh secret delete` |
+| **Import skills** | Fetches skills from any public GitHub repo, creates the files locally |
+| **Push to GitHub** | One-click `git add`, `commit`, `push` when you have local changes |
+
+### Requirements
+
+- **Node.js 20+**
+- **GitHub CLI** (`gh`) — must be authenticated (`gh auth login`). Used for secrets, runs, and triggering workflows.
+
+No GitHub token or API keys needed. Everything runs through the local filesystem and `gh` CLI.
+
 ## Two-repo strategy
 
 This repo is a **public template**. For your own instance, we recommend creating a private copy so your memory, articles, and API keys stay private.
