@@ -10,12 +10,8 @@
 </p>
 
 <p align="center">
-  <img src="aeon-banner.jpg" alt="Aeon Banner" width="100%" />
+  ![Aeon Demo](./aeon.gif)
 </p>
-
-## 📺 See it in Action
-
-![Aeon Demo](./aeon.gif)
 
 ---
 
