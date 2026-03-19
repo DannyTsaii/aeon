@@ -51,7 +51,7 @@ on:
           - claude-sonnet-4-6
           - claude-haiku-4-5-20251001
       var:
-        description: 'Variable (e.g. rust, solana NFT, owner/repo)'
+        description: 'Variable (e.g. AI, bitcoin, owner/repo)'
         required: false
         type: string
   workflow_call:
