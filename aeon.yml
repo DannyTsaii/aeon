@@ -86,6 +86,8 @@ skills:
 
   # --- Weekly (Monday only) ---
   fork-fleet: { enabled: false, schedule: "0 10 * * 1" } # fork fleet scan — inventory active forks, detect diverged work
+  spawn-instance: { enabled: false, schedule: "workflow_dispatch", var: "" } # on-demand — var: "name: purpose"
+  fleet-control: { enabled: false, schedule: "0 9,15 * * *" } # fleet health checks twice daily, dispatch via var
   weekly-review: { enabled: false, schedule: "0 19 * * 1" }
 
   # --- Fallback (must be last) ---

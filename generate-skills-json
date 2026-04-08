@@ -78,6 +78,10 @@ declare -A CATEGORIES=(
   [action-converter]="productivity"
   [idea-capture]="productivity"
   [startup-idea]="productivity"
+  # Fleet & Instances
+  [spawn-instance]="dev"
+  [fleet-control]="dev"
+  [fork-fleet]="dev"
 )
 
 # Extract schedule for a skill from aeon.yml

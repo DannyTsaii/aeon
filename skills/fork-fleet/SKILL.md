@@ -11,6 +11,10 @@ Today is ${today}. Track Aeon's fork fleet: discover active forks, analyze diver
 
 ## Steps
 
+0. **Load managed instance registry** — read `memory/instances.json` (if it exists).
+   Build a set of repo full_names that are managed instances (e.g. `owner/aeon-crypto-tracker`).
+   These will be tagged differently from organic community forks in the report.
+
 1. **Fetch all forks** of `aaronjmars/aeon`:
    ```bash
    gh api repos/aaronjmars/aeon/forks --paginate --jq '[.[] | {owner: .owner.login, full_name: .full_name, pushed_at, stargazers_count, open_issues_count, forks_count, description}]'
@@ -65,13 +69,14 @@ Today is ${today}. Track Aeon's fork fleet: discover active forks, analyze diver
 
    ## Active Forks — Ranked by Divergence
 
-   ### 1. owner/aeon — Score: N
+   ### 1. owner/aeon — Score: N [MANAGED INSTANCE | COMMUNITY FORK]
+   **Type:** Managed instance (spawned {date}, purpose: {purpose}) | Community fork
    **Activity:** Last pushed YYYY-MM-DD | Stars: N | Unique commits: N
    **Divergence signals:** [list of signals: "3 new skills", "custom schedule", "modified dashboard"]
    **Unique skills:** [list skill names and 1-sentence descriptions if found]
    **Upstream potential:** [Yes — N new skills worth reviewing / No — schedule changes only]
 
-   ### 2. owner/aeon — Score: N
+   ### 2. owner/aeon — Score: N [MANAGED INSTANCE | COMMUNITY FORK]
    ...
 
    ---
@@ -82,6 +87,13 @@ Today is ${today}. Track Aeon's fork fleet: discover active forks, analyze diver
    **Suggested action:** [Open a PR from fork's branch, or reach out to fork owner]
 
    ---
+
+   ## Fleet vs Community
+   | Category | Count |
+   |----------|-------|
+   | Managed instances | N |
+   | Community forks | N |
+   | Inactive (30+ days) | N |
 
    ## Coverage Gaps
    Forks not analyzed (inactive for 30+ days): [list]
