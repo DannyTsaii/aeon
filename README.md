@@ -15,14 +15,26 @@
 
 ---
 
-## Why this over OpenClaw?
+## Why "most autonomous"?
 
-[OpenClaw](https://github.com/openclaw/openclaw) is great if you need real-time responses and have infra to run it on. Aeon is for everything else:
+Most agent tools put you in the driver's seat — approve this tool call, review this diff, confirm this action. That's useful for interactive work. But there's a whole class of tasks where you just want the work *done* while you're not there: morning briefs, market monitoring, PR reviews, research digests, security scans.
 
-- **Cheaper** — runs on GitHub Actions, free for public repos, ~$2/mo otherwise. No server.
-- **Built for background tasks** — digests, monitoring, research, writing. You don't need sub-second latency for any of that.
-- **Doesn't break** — no daemon to crash, no process to restart. If GitHub Actions is up, Aeon is up. Failed skill? Next cron tick retries it.
-- **5-minute setup** — fork, add secrets, flip skills on. No Docker, no self-hosting, no config files beyond one YAML.
+Aeon is built for that. Here's how it compares:
+
+|  | Aeon | Claude Code / Cursor | Devin | AutoGPT | Zapier / Make |
+|--|------|----------------------|-------|---------|---------------|
+| Runs unattended on a schedule | Yes | No | No | Partially | Yes |
+| Self-heals when skills fail | Yes | No | No | No | No |
+| Monitors its own output quality | Yes | No | No | No | No |
+| Persistent memory across runs | Yes | No | Per-session | Per-session | No |
+| Reactive triggers (auto-responds to conditions) | Yes | No | No | No | Limited |
+| Fixes its own broken skills | Yes | No | No | No | No |
+| Zero infrastructure | Yes (GitHub Actions) | Local | Cloud | Self-hosted | Cloud (SaaS) |
+| Reasons about tasks | Yes | Yes | Yes | Yes | No |
+
+The key difference: **other agents are interactive tools you use. Aeon is an autonomous system you configure and walk away from.** It decides when to run, what to check, and when to bother you. It scores its own output, detects degradation, and patches failing skills without intervention.
+
+This isn't better for everything — you still want Claude Code for writing code interactively. But for the 90% of recurring tasks that don't need you in the loop, the most autonomous agent is the one that never asks.
 
 ![OpenClaw vs Aeon](./assets/openclaw.jpg)
 
