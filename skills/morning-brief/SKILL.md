@@ -2,7 +2,7 @@
 name: Morning Brief
 description: Aggregated daily briefing — digests, priorities, and what's ahead
 var: ""
-tags: [news]
+tags: [meta]
 ---
 > **${var}** — Area to emphasize. If empty, covers all areas.
 
@@ -44,3 +44,7 @@ Steps:
    - skill at time
    ```
 4. Log to memory/logs/${today}.md.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

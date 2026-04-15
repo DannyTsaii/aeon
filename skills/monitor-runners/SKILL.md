@@ -2,7 +2,7 @@
 name: Monitor Runners
 description: Find the top 5 tokens that ran hardest in the past 24h across major chains using GeckoTerminal
 var: ""
-tags: [meta]
+tags: [crypto]
 ---
 > **${var}** — Filter by chain (e.g. "solana", "eth", "base", "bsc"). If empty, scans all major networks.
 
@@ -135,3 +135,7 @@ Append to `memory/logs/${today}.md`:
 ```
 
 If any token appears as a runner on multiple days in a row, flag it in `memory/MEMORY.md` — sustained momentum is notable.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

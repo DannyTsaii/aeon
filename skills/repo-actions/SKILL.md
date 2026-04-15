@@ -96,3 +96,7 @@ Read memory/watched-repos.md for the repo to analyze.
    ```
 
 9. **Log** to `memory/logs/${today}.md`.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

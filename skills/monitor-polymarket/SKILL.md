@@ -140,3 +140,7 @@ Append to `memory/logs/${today}.md`:
 ```
 
 If a market has moved dramatically or a new trend is forming, also note it in `memory/MEMORY.md` for future reference.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

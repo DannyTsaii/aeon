@@ -33,7 +33,7 @@ Read `memory/MEMORY.md` for prior research context, tracked interests, and relat
 Run **5–8 distinct web searches** to map the topic space:
 
 ```
-Search 1: "${topic}" latest 2026
+Search 1: "${topic}" latest ${today}
 Search 2: "${topic}" research findings OR study
 Search 3: "${topic}" technical implementation OR architecture
 Search 4: "${topic}" criticism OR limitations OR problems
@@ -204,6 +204,10 @@ Full report: articles/deep-research-${today}.md
 ```
 
 ---
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
 
 ## Notes
 

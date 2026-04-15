@@ -129,5 +129,9 @@ Use Replicate's Nano Banana Pro to generate a visual that captures the core conc
    read it: [link to article file]
    ```
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Environment Variables
 - `REPLICATE_API_TOKEN` — Replicate API key (required for image generation, explainer text works without it)

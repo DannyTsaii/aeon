@@ -80,6 +80,10 @@ Combine everything (chain context outputs + tweet roundup) into a single notific
 
 If the combined message exceeds 4000 chars, trim the HN and tweet sections first — token data and paper pick are highest priority.
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Log
 
 Log everything to memory/logs/${today}.md.

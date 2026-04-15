@@ -136,7 +136,7 @@ Generate a comprehensive fleet report.
    # Fleet Status Report — ${today}
 
    ## Overview
-   Parent: aaronjmars/aeon
+   Parent: ${PARENT_REPO}
    Managed instances: N
    Total skills running across fleet: N
 

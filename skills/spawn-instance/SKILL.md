@@ -36,7 +36,7 @@ This is intentional — each instance should have its own API keys for billing i
          "created": "2026-04-08",
          "status": "pending_secrets",
          "skills_enabled": ["token-movers", "defi-monitor", "heartbeat"],
-         "parent": "aaronjmars/aeon"
+         "parent": "OWNER/aeon"
        }
      ]
    }
@@ -49,13 +49,14 @@ This is intentional — each instance should have its own API keys for billing i
 
 4. **Fork the repo** into the owner's account with the custom name:
    ```bash
-   gh repo fork aaronjmars/aeon --fork-name "aeon-{name}" --clone=false
+   PARENT_REPO=$(gh api repos/$(gh repo view --json nameWithOwner -q .nameWithOwner) --jq '.parent.full_name // .full_name')
+   gh repo fork "$PARENT_REPO" --fork-name "aeon-{name}" --clone=false
    ```
    If the fork already exists (gh returns an error), check if it's already registered. If not, proceed to configure it.
 
    Note: `gh repo fork` may not support `--fork-name` in all versions. If it fails, fall back to:
    ```bash
-   gh api repos/aaronjmars/aeon/forks -X POST -f name="aeon-{name}"
+   gh api repos/${PARENT_REPO}/forks -X POST -f name="aeon-{name}"
    ```
 
 5. **Wait for fork availability** — GitHub forks are async. Poll until ready:

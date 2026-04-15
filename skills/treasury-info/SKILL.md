@@ -99,3 +99,7 @@ Steps:
 5. **Log** current totals and per-token balances to `memory/logs/${today}.md` so future runs can track changes over time.
 
 If no watched wallets configured, send nothing. Log "TREASURY_INFO_OK — no wallets configured" and end.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

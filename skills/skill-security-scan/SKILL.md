@@ -47,6 +47,10 @@ Imported skills are markdown files that instruct Claude Code to take actions. A 
 
 5. **Save report** to `articles/security-scan-${today}.md` with full details.
 
+## Sandbox note
+
+This skill reads local files only — no network access needed. If `scripts/scan.sh` is not available, perform the audit inline using grep and file reads.
+
 6. **Notify** via `./notify` if any skills FAIL:
    ```
    *Security Scan — ${today}*

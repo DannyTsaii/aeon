@@ -122,5 +122,9 @@ Append to `memory/logs/${today}.md`:
 
 Save the fetched original tweets to memory so other skills (article, write-tweet) can reference them as source material.
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Environment Variables Required
 - `XAI_API_KEY` — X.AI API key for Grok x_search

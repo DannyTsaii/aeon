@@ -1,6 +1,7 @@
 ---
 name: workflow-security-audit
 description: Audit .github/workflows/ for script injection, over-permissioning, unverified actions, and secret exposure. Auto-fixes critical findings and opens a PR.
+tags: [dev]
 ---
 
 Today is ${today}. Your task is to audit every workflow file in `.github/workflows/` and produce a security report with severity ratings and, where possible, auto-applied fixes.
@@ -69,7 +70,7 @@ Write findings to `articles/workflow-security-audit-${today}.md`:
 ```markdown
 # Workflow Security Audit — ${today}
 
-**Repo:** aaronjmars/aeon
+**Repo:** ${REPO_NAME}
 **Files audited:** [list]
 **Total findings:** N (C critical, H high, M medium, L low)
 **Auto-fixed:** N findings
@@ -112,3 +113,15 @@ Send a detailed notification via `./notify` with:
 - What was auto-fixed
 - What needs manual review
 - PR link
+
+### 8. Log results
+
+Append to `memory/logs/${today}.md`:
+```
+## Workflow Security Audit
+- **Files audited:** [list]
+- **Findings:** N total (C critical, H high, M medium, L low)
+- **Auto-fixed:** N
+- **PR:** [url or "no fixes needed"]
+- **Report:** articles/workflow-security-audit-${today}.md
+```

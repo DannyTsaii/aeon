@@ -40,6 +40,10 @@ Today is ${today}. Search X for tweets matching **${var}**.
 - `query=from:vaborsh ethereum` — tweets from a user about a topic
 - `query=#DeFi` — tweets with a hashtag
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Environment Variables Required
 
 - `XAI_API_KEY` — X.AI API key (required)

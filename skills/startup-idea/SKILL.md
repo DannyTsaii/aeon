@@ -57,3 +57,7 @@ If soul files exist (`soul/SOUL.md`), read them for identity, expertise, and wor
    - **Constraint:** [var or "none"]
    - **Notification sent:** yes
    ```
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

@@ -71,6 +71,10 @@ Read the last 2 days of memory/logs/ to avoid repeating posts.
 
 If no relevant posts are found across all subreddits, log "REDDIT_DIGEST_OK" and end.
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Environment Variables
 
 No environment variables required — uses Reddit's public JSON API (no authentication needed).

@@ -125,6 +125,10 @@ Log to `memory/logs/${today}.md`:
 - Runners-up: [brief scores]
 ```
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Constraints
 
 - Never downgrade a working skill. If all variations score lower than or equal to the original on "Improvement", skip the update and notify: "No improvement found for ${var} — all variations scored at baseline."

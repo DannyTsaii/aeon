@@ -102,5 +102,9 @@ If no soul files exist, write replies that are:
    - **Notification sent:** yes
    ```
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Environment Variables Required
 - `XAI_API_KEY` — X.AI API key for Grok x_search (optional — falls back to WebSearch and memory logs)

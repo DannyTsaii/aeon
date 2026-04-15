@@ -53,3 +53,7 @@ Steps:
    ```
 4. Log all current prices to memory/logs/${today}.md (for next comparison).
 If no anomalies detected, log "TOKEN_ALERT_OK" and end.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).

@@ -64,15 +64,19 @@ Publish Aeon's article outputs to the GitHub Pages gallery at `docs/_posts/`.
    git status docs/
    ```
 
-6. If there are new or changed files, stage and commit them:
+6. If there are new or changed files, create a branch, stage, commit, and open a PR:
    ```bash
+   BRANCH="chore/gallery-sync-$(date +%Y-%m-%d)"
+   git checkout -b "$BRANCH"
    git add docs/_posts/ docs/_data/
    git diff --cached --quiet || git commit -m "chore(gallery): sync articles and site data $(date +%Y-%m-%d)"
    ```
 
-7. Push to the current branch (main or default):
+7. Push the branch and open a PR:
    ```bash
-   git push
+   git push -u origin "$BRANCH"
+   gh pr create --title "chore(gallery): sync articles and site data $(date +%Y-%m-%d)" \
+     --body "Automated gallery sync — new articles and site data updates."
    ```
 
 8. Update `memory/logs/${today}.md` with:
@@ -82,7 +86,7 @@ Publish Aeon's article outputs to the GitHub Pages gallery at `docs/_posts/`.
    - Whether site data (logs, memory, topics) was synced
 
 9. Send a notification via `./notify`:
-   "Gallery updated: N articles published to GitHub Pages.\n\nhttps://aaronjmars.github.io/aeon"
+   "Gallery updated: N articles published to GitHub Pages."
 
 ## Notes
 

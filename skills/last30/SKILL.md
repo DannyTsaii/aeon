@@ -24,6 +24,7 @@ Calculate the date range:
 DAYS=30  # or from --days flag
 FROM_DATE=$(date -u -d "${DAYS} days ago" +%Y-%m-%d 2>/dev/null || date -u -v-${DAYS}d +%Y-%m-%d)
 TO_DATE=$(date -u +%Y-%m-%d)
+YEAR=$(date -u +%Y)
 ```
 
 Read `memory/MEMORY.md` for context on tracked interests and prior research.
@@ -147,7 +148,7 @@ Run 3-4 web searches targeting long-form content:
 WebSearch: "${topic}" analysis OR deep dive OR explained (last 30 days)
 WebSearch: "${topic}" blog OR newsletter OR substack (last 30 days)
 WebSearch: "${topic}" criticism OR problems OR controversy (last 30 days)
-WebSearch: "${topic}" data OR statistics OR report 2026
+WebSearch: "${topic}" data OR statistics OR report ${YEAR}
 ```
 
 For the top 5-8 results, use WebFetch to pull full content. Prioritize:
@@ -269,6 +270,10 @@ Full report: articles/last30-${topic_slug}-${today}.md
 ```
 
 ---
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
 
 ## Environment Variables
 

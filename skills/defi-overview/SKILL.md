@@ -77,4 +77,8 @@ If `${var}` is set, focus the overview on that chain or protocol — show its TV
    Pool — X.X% APY ($XM TVL)
    ```
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 6. Log to memory/logs/${today}.md.

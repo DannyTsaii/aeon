@@ -15,9 +15,10 @@ Today is ${today}. Track Aeon's fork fleet: discover active forks, analyze diver
    Build a set of repo full_names that are managed instances (e.g. `owner/aeon-crypto-tracker`).
    These will be tagged differently from organic community forks in the report.
 
-1. **Fetch all forks** of `aaronjmars/aeon`:
+1. **Fetch all forks** of this repo (determine the repo from `git remote get-url origin`):
    ```bash
-   gh api repos/aaronjmars/aeon/forks --paginate --jq '[.[] | {owner: .owner.login, full_name: .full_name, pushed_at, stargazers_count, open_issues_count, forks_count, description}]'
+   PARENT_REPO=$(gh api repos/$(gh repo view --json nameWithOwner -q .nameWithOwner) --jq '.parent.full_name // .full_name')
+   gh api repos/${PARENT_REPO}/forks --paginate --jq '[.[] | {owner: .owner.login, full_name: .full_name, pushed_at, stargazers_count, open_issues_count, forks_count, description}]'
    ```
 
 2. **Filter for active forks** — keep only forks with a `pushed_at` within the last 30 days. If no active forks exist, log `FORK_FLEET_QUIET: no active forks` to `memory/logs/${today}.md` and **stop — do NOT send any notification**.
@@ -29,13 +30,13 @@ Today is ${today}. Track Aeon's fork fleet: discover active forks, analyze diver
    ```
    Then check which of those SHAs exist in upstream:
    ```bash
-   gh api repos/aaronjmars/aeon/commits --paginate --jq '[.[].sha]' -X GET -f since="$(date -u -d '90 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -v-90d +%Y-%m-%dT%H:%M:%SZ)"
+   gh api repos/${PARENT_REPO}/commits --paginate --jq '[.[].sha]' -X GET -f since="$(date -u -d '90 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -v-90d +%Y-%m-%dT%H:%M:%SZ)"
    ```
    Commits in the fork but NOT in upstream are **unique fork commits**.
 
 4. **Classify divergence** for each fork using the unique commits. Check which areas were modified by fetching the file tree comparison:
    ```bash
-   gh api repos/FORK_OWNER/aeon/compare/aaronjmars:aeon:main...FORK_OWNER:main --jq '{ahead_by: .ahead_by, behind_by: .behind_by, files: [.files[] | {filename, status, additions, deletions}]}'
+   gh api repos/FORK_OWNER/aeon/compare/${PARENT_REPO##*/}:main...FORK_OWNER:main --jq '{ahead_by: .ahead_by, behind_by: .behind_by, files: [.files[] | {filename, status, additions, deletions}]}'
    ```
    Classify each fork into divergence signals:
    - **New skills**: files added under `skills/` not present in upstream

@@ -102,6 +102,10 @@ Today is ${today}. Your task is to generate a complete, production-ready skill f
    Trigger manually: dispatch with skill=`{skill-name}`
    ```
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 ## Quality checklist
 
 Before finalizing, verify the generated SKILL.md:

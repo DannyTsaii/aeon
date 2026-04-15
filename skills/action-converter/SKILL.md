@@ -8,7 +8,7 @@ tags: [meta]
 
 Read memory/MEMORY.md for current goals, priorities, and tracked items.
 Read the last 7 days of memory/logs/ for recent activity, patterns, and what's been happening.
-If soul files exist (`soul/SOUL.md`), read them for identity and focus areas.
+If soul files exist (`soul/SOUL.md`), read them for context on identity and focus areas.
 
 ## Steps
 

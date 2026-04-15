@@ -27,4 +27,8 @@ Steps:
 7. Log what you did to memory/logs/${today}.md.
 8. Send a notification via `./notify`: "New article written: [title]\n\nhttps://github.com/${repo}/blob/main/articles/${today}.md"
 
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
+
 Write complete, publication-ready content. No placeholders.

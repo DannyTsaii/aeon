@@ -30,7 +30,7 @@ Read the last 7 days of memory/logs/ to avoid recommending papers already covere
    - `paper.upvotes` — community upvotes (higher = more notable)
    - `paper.ai_summary` — AI-generated summary (on daily papers)
 
-2. If the search returned thin results or `${var}` is a niche topic, also try **WebSearch** for "[topic] paper 2025 2026 site:arxiv.org" to catch papers the API missed.
+2. If the search returned thin results or `${var}` is a niche topic, also try **WebSearch** for "[topic] paper $(date +%Y) site:arxiv.org" to catch papers the API missed.
 
 3. From all results, pick **the single best paper** — the one most worth reading today. Criteria: novelty, relevance, practical implications, community signal (upvotes). Skip anything already mentioned in recent logs.
 
@@ -46,3 +46,7 @@ Read the last 7 days of memory/logs/ to avoid recommending papers already covere
 5. Log to memory/logs/${today}.md.
 
 If nothing interesting found, log "PAPER_PICK_OK" and end.
+
+## Sandbox note
+
+The sandbox may block outbound curl. Use **WebFetch** as a fallback for any URL fetch. For auth-required APIs, use the pre-fetch/post-process pattern (see CLAUDE.md).
