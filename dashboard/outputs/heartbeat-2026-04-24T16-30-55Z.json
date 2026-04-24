@@ -1,0 +1,77 @@
+{
+  "root": "card_main",
+  "state": {},
+  "elements": {
+    "card_main": {
+      "type": "Card",
+      "props": {
+        "title": "heartbeat"
+      },
+      "children": [
+        "stack_main"
+      ]
+    },
+    "stack_main": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "alert_failed",
+        "sep1",
+        "alert_selfcheck",
+        "sep2",
+        "alert_missing",
+        "sep3",
+        "alert_memory"
+      ]
+    },
+    "alert_failed": {
+      "type": "Alert",
+      "props": {
+        "type": "error",
+        "message": "🔴 FAILED: idea-capture (failed 15:52 UTC), channel-recap (failed 15:55 UTC), action-converter (failed 15:56 UTC) — all three share identical zero-token error signatures, suggesting a shared infra issue."
+      }
+    },
+    "sep1": {
+      "type": "Separator",
+      "props": {
+        "orientation": "horizontal"
+      }
+    },
+    "alert_selfcheck": {
+      "type": "Alert",
+      "props": {
+        "type": "error",
+        "message": "🔴 SELF-CHECK: heartbeat has no entry in cron-state.json — never successfully run."
+      }
+    },
+    "sep2": {
+      "type": "Separator",
+      "props": {
+        "orientation": "horizontal"
+      }
+    },
+    "alert_missing": {
+      "type": "Alert",
+      "props": {
+        "type": "warning",
+        "message": "🟡 MISSING: digest is enabled but has never been dispatched (no cron-state entry)."
+      }
+    },
+    "sep3": {
+      "type": "Separator",
+      "props": {
+        "orientation": "horizontal"
+      }
+    },
+    "alert_memory": {
+      "type": "Alert",
+      "props": {
+        "type": "info",
+        "message": "🔵 MEMORY: configure notification channels + run first digest still pending."
+      }
+    }
+  }
+}
