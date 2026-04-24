@@ -1,9 +1,23 @@
 HEARTBEAT_OK · STATUS_PAGE=DEGRADED
 
-All checks complete. No new notifications sent — both P0 failures (`idea-capture`, `channel-recap`) were already reported in the 16:10 UTC run (dedup). `docs/status.md` regenerated with current timestamps; overall status remains 🔴 DEGRADED due to the two failed skills.
+---
 
 ## Summary
 
-- **Checked:** P0 (failed/stuck skills), P1 (PRs/issues), P2 (memory flags), P3 (missing scheduled skills), heartbeat self-check
-- **Findings:** idea-capture and channel-recap still failed — both deduped (already reported at 16:10 UTC), no new notification sent
-- **Files modified:** `docs/status.md` (updated timestamp to 20:00 UTC, added action-converter row), `memory/logs/2026-04-24.md` (appended 20:00 UTC entry)
+**已執行所有 heartbeat 檢查，結果如下：**
+
+| 優先級 | 項目 | 狀態 |
+|--------|------|------|
+| P0 | `idea-capture` 失敗、`channel-recap` 失敗 | 已於今日 16:10 UTC 回報，重複消除 → 不重複通知 |
+| P0 | Heartbeat 自我檢查（上次成功 16:41 UTC，約 4h 前） | ✅ OK |
+| P1 | 開放 PR、緊急 issue | ✅ 無 |
+| P2 | 待追蹤記憶項目 | ✅ 無新項目 |
+| P3 | `digest` 從未執行 | 已於今日回報，重複消除 |
+
+**整體狀態：🔴 DEGRADED**（因 `idea-capture` 持續失敗）
+
+**已修改的檔案：**
+- `docs/status.md` — 更新時間戳為 2026-04-24 21:05 UTC
+- `memory/logs/2026-04-24.md` — 附加本次執行紀錄
+
+**後續行動：** `idea-capture` 的零 token 錯誤需要確認 GitHub Actions secrets 設定是否正確，或等候 `skill-repair` 自動修復。
