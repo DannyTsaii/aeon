@@ -1,0 +1,273 @@
+{
+  "root": "card-main",
+  "state": {},
+  "elements": {
+    "card-main": {
+      "type": "Card",
+      "props": {
+        "title": "5 Actions — 2026-04-24"
+      },
+      "children": [
+        "shape-text",
+        "sep-1",
+        "action-1",
+        "sep-2",
+        "action-2",
+        "sep-3",
+        "action-3",
+        "sep-4",
+        "action-4",
+        "sep-5",
+        "action-5",
+        "sep-6",
+        "sources-section"
+      ]
+    },
+    "shape-text": {
+      "type": "Text",
+      "props": {
+        "text": "Shape: Bootstrap mode: configure notifications, fix 2 failing skills, pin workflow SHAs, run digest",
+        "variant": "lead"
+      }
+    },
+    "sep-1": {
+      "type": "Separator",
+      "props": {}
+    },
+    "action-1": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "a1-heading",
+        "a1-why",
+        "a1-done",
+        "a1-loop"
+      ]
+    },
+    "a1-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "1. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID (or DISCORD_WEBHOOK_URL) in GitHub repo secrets for aaronjmars/aeon",
+        "level": "h3"
+      }
+    },
+    "a1-why": {
+      "type": "Text",
+      "props": {
+        "text": "why: no notification channel is configured — 3 skills failing silently, zero delivery confirmation on any run"
+      }
+    },
+    "a1-done": {
+      "type": "Text",
+      "props": {
+        "text": "done: `./notify \"setup complete\"` logs a successful delivery to at least one channel"
+      }
+    },
+    "a1-loop": {
+      "type": "Badge",
+      "props": {
+        "text": "loop: configure-notification-secrets"
+      }
+    },
+    "sep-2": {
+      "type": "Separator",
+      "props": {}
+    },
+    "action-2": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "a2-heading",
+        "a2-why",
+        "a2-done",
+        "a2-loop"
+      ]
+    },
+    "a2-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "2. Open a PR pinning actions/checkout and actions/setup-node to commit SHAs in aeon.yml, messages.yml, chain-runner.yml, and scheduler.yml",
+        "level": "h3"
+      }
+    },
+    "a2-why": {
+      "type": "Text",
+      "props": {
+        "text": "why: 2026-04-11 security audit flagged mutable @v5 tags as medium supply-chain risk requiring manual fix"
+      }
+    },
+    "a2-done": {
+      "type": "Text",
+      "props": {
+        "text": "done: PR opened; all 4 workflow files reference commit SHAs instead of @v5 tags"
+      }
+    },
+    "a2-loop": {
+      "type": "Badge",
+      "props": {
+        "text": "loop: pin-workflow-actions"
+      }
+    },
+    "sep-3": {
+      "type": "Separator",
+      "props": {}
+    },
+    "action-3": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "a3-heading",
+        "a3-why",
+        "a3-done",
+        "a3-loop"
+      ]
+    },
+    "a3-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "3. Read skills/idea-capture/SKILL.md, diagnose the failure logged at 2026-04-24T15:52:48Z, and open a PR with the fix",
+        "level": "h3"
+      }
+    },
+    "a3-why": {
+      "type": "Text",
+      "props": {
+        "text": "why: idea-capture failed its first run with 0 output tokens — likely a missing config key or malformed prompt in aeon.yml"
+      }
+    },
+    "a3-done": {
+      "type": "Text",
+      "props": {
+        "text": "done: PR opened and a subsequent idea-capture run completes with last_status=success in cron-state.json"
+      }
+    },
+    "a3-loop": {
+      "type": "Badge",
+      "props": {
+        "text": "loop: fix-idea-capture"
+      }
+    },
+    "sep-4": {
+      "type": "Separator",
+      "props": {}
+    },
+    "action-4": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "a4-heading",
+        "a4-why",
+        "a4-done",
+        "a4-loop"
+      ]
+    },
+    "a4-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "4. Trigger the digest skill via `gh workflow run aeon.yml -f skill=digest` to seed memory/logs/ with a first real entry",
+        "level": "h3"
+      }
+    },
+    "a4-why": {
+      "type": "Text",
+      "props": {
+        "text": "why: memory/logs/ has 0 entries in the last 14 days — BOOTSTRAP exit condition requires seeding this to unlock full mode"
+      }
+    },
+    "a4-done": {
+      "type": "Text",
+      "props": {
+        "text": "done: digest workflow run completes green and memory/logs/2026-04-24.md exists with a digest entry"
+      }
+    },
+    "a4-loop": {
+      "type": "Badge",
+      "props": {
+        "text": "loop: run-first-digest"
+      }
+    },
+    "sep-5": {
+      "type": "Separator",
+      "props": {}
+    },
+    "action-5": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "a5-heading",
+        "a5-why",
+        "a5-done",
+        "a5-loop"
+      ]
+    },
+    "a5-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "5. Read skills/channel-recap/SKILL.md, diagnose the failure at 2026-04-24T15:55:54Z, and open a PR with the fix",
+        "level": "h3"
+      }
+    },
+    "a5-why": {
+      "type": "Text",
+      "props": {
+        "text": "why: channel-recap failed on first run with 0 output tokens — same zero-output pattern as idea-capture, needs config or prompt fix"
+      }
+    },
+    "a5-done": {
+      "type": "Text",
+      "props": {
+        "text": "done: PR opened and a subsequent channel-recap run completes with last_status=success in cron-state.json"
+      }
+    },
+    "a5-loop": {
+      "type": "Badge",
+      "props": {
+        "text": "loop: fix-channel-recap"
+      }
+    },
+    "sep-6": {
+      "type": "Separator",
+      "props": {}
+    },
+    "sources-section": {
+      "type": "Stack",
+      "props": {
+        "direction": "vertical",
+        "gap": "md"
+      },
+      "children": [
+        "sources-heading",
+        "sources-stats"
+      ]
+    },
+    "sources-heading": {
+      "type": "Heading",
+      "props": {
+        "text": "Sources",
+        "level": "h4"
+      }
+    },
+    "sources-stats": {
+      "type": "Text",
+      "props": {
+        "text": "memory=26 logs=0 topics=0 prs=0 cron_failing=3 mode=BOOTSTRAP",
+        "variant": "muted"
+      }
+    }
+  }
+}
