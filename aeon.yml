@@ -46,6 +46,7 @@ skills:
   # --- Afternoon (2 PM UTC) ---
   article: { enabled: false, schedule: "0 14 * * *" }
   technical-explainer: { enabled: false, schedule: "30 14 * * *" } # visual technical explanation with AI-generated hero image
+  digest: { enabled: true, schedule: "0 14 * * *", var: "AI agents" }
   digest: { enabled: false, schedule: "0 14 * * *" }
   research-brief: { enabled: false, schedule: "0 14 * * *" }
   deep-research: { enabled: false, schedule: "workflow_dispatch", var: "" } # on-demand only — set var to research topic
@@ -54,7 +55,7 @@ skills:
   search-skill: { enabled: false, schedule: "0 14 * * *" }
 
   security-digest: { enabled: false, schedule: "0 14 * * *" }
-  idea-capture: { enabled: false, schedule: "0 14 * * *" }
+  idea-capture: { enabled: true, schedule: "0 14 * * *", var: bitcoin }
   deal-flow: { enabled: false, schedule: "0 14 * * 1" } # weekly funding round tracker
   reg-monitor: { enabled: false, schedule: "0 14 * * 3" } # regulatory developments tracker
 
@@ -65,7 +66,13 @@ skills:
   repo-pulse: { enabled: false, schedule: "0 15 * * *" }
   star-milestone: { enabled: false, schedule: "15 15 * * *" } # daily — announce when watched repos cross star-count milestones
   project-lens: { enabled: false, schedule: "30 15 * * 1,3,5" } # articles through rotating analytical lenses
-  repo-scanner: { enabled: false, schedule: "0 15 * * 0", model: "claude-sonnet-4-6", var: "" } # catalog all GitHub repos — set var to username
+  repo-scanner:
+    {
+      enabled: false,
+      schedule: "0 15 * * 0",
+      model: "claude-sonnet-4-6",
+      var: ""
+    } # catalog all GitHub repos — set var to username
 
   # --- Late afternoon (4 PM UTC) ---
   skill-security-scan: { enabled: false, schedule: "0 16 * * 1" }
@@ -97,7 +104,13 @@ skills:
   update-gallery: { enabled: false, schedule: "0 18 * * 0" }
 
   # --- Content distribution (runs 30 min after article-generating skills) ---
-  syndicate-article: { enabled: false, schedule: "30 15 * * *", model: "claude-sonnet-4-6", var: "" } # cross-post latest article to Dev.to
+  syndicate-article:
+    {
+      enabled: false,
+      schedule: "30 15 * * *",
+      model: "claude-sonnet-4-6",
+      var: ""
+    } # cross-post latest article to Dev.to
 
   # --- Evening / meta (6 PM UTC) ---
   goal-tracker: { enabled: false, schedule: "0 18 * * *" }
@@ -111,7 +124,13 @@ skills:
   tool-builder: { enabled: false, schedule: "reactive", var: "" } # reactive — build automation scripts from recurring tasks
   skill-repair: { enabled: false, schedule: "reactive", var: "" } # reactive — auto-fix failing skills
   evening-recap: { enabled: false, schedule: "0 21 * * *", model: "claude-sonnet-4-6" } # end-of-day ops summary
-  vercel-projects: { enabled: false, schedule: "0 18 * * 0", model: "claude-sonnet-4-6", var: "" } # Sunday — catalog Vercel projects
+  vercel-projects:
+    {
+      enabled: false,
+      schedule: "0 18 * * 0",
+      model: "claude-sonnet-4-6",
+      var: ""
+    } # Sunday — catalog Vercel projects
 
   # --- Cost tracking (Monday 7 AM UTC, weekly) ---
   cost-report: { enabled: false, schedule: "0 7 * * 1", model: "claude-sonnet-4-6" } # weekly API cost breakdown by skill and model
@@ -180,7 +199,7 @@ chains:
 # Default model for all skills. Override per-run via workflow_dispatch.
 # Options: claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5-20251001
 # Bankr gateway also supports: gemini-3-pro, gemini-3-flash, gpt-5.2, kimi-k2.5, qwen3-coder
-model: claude-opus-4-7
+model: claude-sonnet-4-6
 
 # AI Gateway — route Claude Code requests through an LLM gateway.
 # provider: direct (default, uses ANTHROPIC_API_KEY) | bankr (uses BANKR_LLM_KEY)
